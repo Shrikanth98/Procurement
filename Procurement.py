@@ -173,19 +173,19 @@ plt.plot(count_summary['Entity'], count_summary['Count'])
 
 
 #PTPK
-TT = []
 
-def numerical(s):
-    return re.sub("\D", "", s)
-
-numerical(df['Truck Type'])
-
-for i in range(len(df)):
-    df['PTPK'] = df['Rate \n(Per Truckload)'][i]/(df['Distance (in km)'][i]*9)
-    
+ptpk1 = pd.read_excel(r'D:\User8\Shrikanth\Project\Truck Type.xlsx')
+ptpk = pd.merge(df, ptpk1, how='inner', on='Truck Type')
 
 
+new=[]
+for i in range(len(ptpk)):
+    new.append(ptpk['Rate \n(Per Truckload)'][i]/(ptpk['Distance (in km)'][i]*ptpk['Truck Type(in mt)'][i]))
 
+ptpk['PTPK'] = new
+
+#Transporter wise average PTPK
+ptpk_avg = ptpk[['PTPK', 'Filename']].groupby(['Filename']).mean()
     
     
 
