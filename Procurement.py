@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import glob
 import seaborn as sns
+import plotly.express as px
 sns.set()
 
 
@@ -186,7 +187,27 @@ ptpk['PTPK'] = new
 
 #Transporter wise average PTPK
 ptpk_avg = ptpk[['PTPK', 'Filename']].groupby(['Filename']).mean()
-    
-    
+
+ptpk_avg = ptpk_avg.reset_index()    
+ptpk_avg.plot.bar(x='Filename', y='PTPK')    
+
+#Latitude and Longitude
+
+latlong = pd.read_excel(r'D:\User8\Shrikanth\Project\Lat Long.xlsx')
+
+#Origin
+plt.scatter(x=latlong['O_Long'], y=latlong['O_Lat'])
+plt.show()
+
+#Destination
+plt.scatter(x=latlong['D_Long'], y=latlong['D_Lat'])
+plt.show()
+
+import folium
+map_osm = folium.Map(location=[45.5236, -122.6750])
+map_osm.create_map(path='osm.html')
 
 
+gapminder = px.data.gapminder().query("year == 2007")
+fig = px.line_geo(gapminder, locations="iso_alpha", color="continent", projection="orthographic")
+fig.show()
