@@ -13,8 +13,9 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import glob
 import seaborn as sns
-import plotly.express as px
 sns.set()
+import plotly.express as px
+import mapbox
 
 
 #Read excel files from a folder and merge into a single excel file
@@ -89,7 +90,7 @@ baseline_final = baseline_final.rename(columns = {"Annual Lane Spend":"Baseline 
 
 #baseline_final['Lot Number'] = baseline_final.index
 
-baseline_sum = baseline_final['Baseline Spend'].sum()
+baseline_spend = baseline_final['Baseline Spend'].sum()
 
 #To find escalations from L1, L2 and L3
 
@@ -172,7 +173,7 @@ count_summary = count_summary[['Entity', 'Count']]
 
 plt.plot(count_summary['Entity'], count_summary['Count'])
 
-
+total_volume = baseline['Annual Trips'].sum()
 #PTPK
 
 ptpk1 = pd.read_excel(r'D:\User8\Shrikanth\Project\Truck Type.xlsx')
